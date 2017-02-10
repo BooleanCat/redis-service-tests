@@ -7,7 +7,10 @@ from sshtunnel import SSHTunnelForwarder
 
 SSH_TUNNEL = None
 
-TARANTINO_ADDRESS = ('tarantino.directors.cf-app.com', 22)
+TARANTINO_ADDRESS = (
+    os.environ['SSH_GATEWAY_ADDRESS'],
+    int(os.environ['SSH_GATEWAY_PORT']),
+)
 
 TUNNEL_KWARGS = {
     'ssh_username': os.environ['SSH_GATEWAY_USER'],

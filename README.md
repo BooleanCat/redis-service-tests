@@ -9,6 +9,15 @@ Requirements
 1. Install Python dependencies: `pip install -r requirements.txt`
 1. A bosh deployed `redis-service-release` that uses default configuration
 
+Alternatively, run tests in docker and the only requirement is docker.
+
+Usage (docker)
+--------------
+1. `cp .envrc.template .envrc`
+1. Define variables in `.envrc`
+1. `docker build -t redis-service-tests .`
+1. `./scripts/docker-test.sh`
+
 Usage
 -----
 1. `cp .envrc.template .envrc`
