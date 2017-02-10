@@ -30,4 +30,4 @@ def response_of_pong(step, response):
     if response == "PONG":
         expect(step.context.response).to(be_true)
     else:
-        expect(step.context.response).to(response)
+        expect(step.context.response).to(equal(response))
