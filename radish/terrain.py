@@ -1,27 +1,34 @@
 import os
+from collections import namedtuple
 
 from radish import before, after, world
 from sshtunnel import SSHTunnelForwarder
 
+import env
 
-SSH_GATEWAY_ADDRESS = (
-    os.environ['SSH_GATEWAY_HOST'],
-    int(os.environ['SSH_GATEWAY_PORT']),
-)
 
-TUNNEL_KWARGS = {
-    'ssh_username': os.environ['SSH_GATEWAY_USER'],
-    'ssh_pkey': os.environ['SSH_GATEWAY_PKEY'],
-    'remote_bind_address': (os.environ['REMOTE_BIND_IP'], int(os.environ['REMOTE_BIND_PORT'])),
-}
+Address = namedtuple('Address', ['host', 'port'])
 
 
 @before.all
 def create_ssh_tunnel(features, marker):
-    world.ssh_tunnel = SSHTunnelForwarder(SSH_GATEWAY_ADDRESS, **TUNNEL_KWARGS)
+    world.ssh_tunnel = SSHTunnelForwarder(
+        env.SSH_GATEWAY_ADDRESS,
+        **env.TUNNEL_KWARGS,
+    )
     world.ssh_tunnel.__enter__()
+    world.redis_credentials = get_redis_credentials()
 
 
 @after.all
 def destroy_ssh_tunnel(features, marker):
     world.ssh_tunnel.__exit__()
+
+
+def get_redis_credentials():
+    redis_address = Address(*world.ssh_tunnel.local_bind_address)
+    return {
+        'host': redis_address.host,
+        'port': redis_address.port,
+        'password': env.REDIS_AUTH,
+    }

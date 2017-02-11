@@ -4,6 +4,6 @@ Feature: a redis-service deployment
     I need a Redis server to be deployed
 
     Scenario: redis is running
-        Given redis credentials
+        Given a redis connection
         When I ping redis
         Then I expect the response PONG

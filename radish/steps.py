@@ -1,29 +1,16 @@
-import os
-from collections import namedtuple
-
 import redis
 from expects import *
 from radish import given, when, then, world
 
 
-Address = namedtuple('Address', ['host', 'port'])
-
-
-@given('redis credentials')
+@given('a redis connection')
 def redis_credentials(step):
-    address = Address(*world.ssh_tunnel.local_bind_address)
-
-    step.context.credentials = {
-        'host': address.host,
-        'port': address.port,
-        'password': os.environ['REDIS_AUTH'],
-    }
+    step.context.connection = redis.StrictRedis(**world.redis_credentials)
 
 
 @when('I ping redis')
 def ping_redis(step):
-    client = redis.StrictRedis(**step.context.credentials)
-    step.context.response = client.ping()
+    step.context.response = step.context.connection.ping()
 
 
 @then('I expect the response {response:w}')
