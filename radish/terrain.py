@@ -1,10 +1,8 @@
 import os
 
-from radish import before, after
+from radish import before, after, world
 from sshtunnel import SSHTunnelForwarder
 
-
-SSH_TUNNEL = None
 
 TARANTINO_ADDRESS = (
     os.environ['SSH_GATEWAY_ADDRESS'],
@@ -15,18 +13,15 @@ TUNNEL_KWARGS = {
     'ssh_username': os.environ['SSH_GATEWAY_USER'],
     'ssh_pkey': os.environ['SSH_GATEWAY_PKEY'],
     'remote_bind_address': (os.environ['REMOTE_BIND_IP'], int(os.environ['REMOTE_BIND_PORT'])),
-    'local_bind_address': ('0.0.0.0', 8009),
 }
 
 
 @before.all
 def create_ssh_tunnel(features, marker):
-    global SSH_TUNNEL
-    SSH_TUNNEL = SSHTunnelForwarder(TARANTINO_ADDRESS, **TUNNEL_KWARGS)
-    SSH_TUNNEL.__enter__()
+    world.ssh_tunnel = SSHTunnelForwarder(TARANTINO_ADDRESS, **TUNNEL_KWARGS)
+    world.ssh_tunnel.__enter__()
 
 
 @after.all
 def destroy_ssh_tunnel(features, marker):
-    global SSH_TUNNEL
-    SSH_TUNNEL.__exit__()
+    world.ssh_tunnel.__exit__()

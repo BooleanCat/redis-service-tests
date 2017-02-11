@@ -1,20 +1,21 @@
 import os
+from collections import namedtuple
 
 import redis
 from expects import *
-from radish import given, when, then, arg_expr
+from radish import given, when, then, world
 
 
-@arg_expr("ip_address", r'\d{1,3}(\.\d{1,3}){3}')
-def user_argument_expression(text):
-    return text
+Address = namedtuple('Address', ['host', 'port'])
 
 
-@given('redis credentials {host:ip_address}:{port:w}')
-def redis_credentials(step, host, port):
+@given('redis credentials')
+def redis_credentials(step):
+    address = Address(*world.ssh_tunnel.local_bind_address)
+
     step.context.credentials = {
-        'host': host,
-        'port': int(port),
+        'host': address.host,
+        'port': address.port,
         'password': os.environ['REDIS_AUTH'],
     }
 

@@ -45,9 +45,9 @@ RUN echo 'eval "$(pyenv virtualenv-init -)"' >> $HOME/.bashrc
 
 # install Python
 RUN pyenv install 3.6.0
-RUN pyenv virtualenv 3.6.0 redis-service-test
+RUN pyenv virtualenv 3.6.0 redis-service-tests
 RUN pyenv rehash
-RUN pyenv local redis-service-test
+RUN pyenv local redis-service-tests
 ENV PATH $PATH:$PYENV_ROOT/shims
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools

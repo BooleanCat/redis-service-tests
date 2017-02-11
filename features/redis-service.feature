@@ -4,6 +4,6 @@ Feature: a redis-service deployment
     I need a Redis server to be deployed
 
     Scenario: redis is running
-        Given redis credentials 0.0.0.0:8009
+        Given redis credentials
         When I ping redis
         Then I expect the response PONG
