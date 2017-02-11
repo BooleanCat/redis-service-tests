@@ -14,7 +14,7 @@ export SSH_GATEWAY_USER=
 export SSH_GATEWAY_PKEY=
 
 # ip address of the ssh gateway
-export SSH_GATEWAY_ADDRESS=
+export SSH_GATEWAY_HOST=
 
 # port of the ssh gateway
 export SSH_GATEWAY_PORT=

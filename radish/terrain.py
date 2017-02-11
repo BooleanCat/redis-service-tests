@@ -4,8 +4,8 @@ from radish import before, after, world
 from sshtunnel import SSHTunnelForwarder
 
 
-TARANTINO_ADDRESS = (
-    os.environ['SSH_GATEWAY_ADDRESS'],
+SSH_GATEWAY_ADDRESS = (
+    os.environ['SSH_GATEWAY_HOST'],
     int(os.environ['SSH_GATEWAY_PORT']),
 )
 
@@ -18,7 +18,7 @@ TUNNEL_KWARGS = {
 
 @before.all
 def create_ssh_tunnel(features, marker):
-    world.ssh_tunnel = SSHTunnelForwarder(TARANTINO_ADDRESS, **TUNNEL_KWARGS)
+    world.ssh_tunnel = SSHTunnelForwarder(SSH_GATEWAY_ADDRESS, **TUNNEL_KWARGS)
     world.ssh_tunnel.__enter__()
 
 
