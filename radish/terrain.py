@@ -13,8 +13,10 @@ Address = namedtuple('Address', ['host', 'port'])
 @before.all
 def create_ssh_tunnel(features, marker):
     world.ssh_tunnel = SSHTunnelForwarder(
-        env.SSH_GATEWAY_ADDRESS,
-        **env.TUNNEL_KWARGS,
+        (env.SSH_GATEWAY_HOST, env.SSH_GATEWAY_PORT),
+        ssh_username=env.SSH_GATEWAY_USER,
+        ssh_pkey=env.SSH_GATEWAY_PKEY,
+        remote_bind_address=(env.REMOTE_BIND_HOST, env.REMOTE_BIND_PORT),
     )
     world.ssh_tunnel.__enter__()
     world.redis_credentials = get_redis_credentials()

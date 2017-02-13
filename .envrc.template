@@ -5,7 +5,7 @@ export REDIS_AUTH=
 export REMOTE_BIND_PORT=
 
 # ip address of the remote redis instance
-export REMOTE_BIND_IP=
+export REMOTE_BIND_HOST=
 
 # ssh gateway username
 export SSH_GATEWAY_USER=
