@@ -4,7 +4,7 @@ from collections import namedtuple
 from radish import before, after, world
 from sshtunnel import SSHTunnelForwarder
 
-import env
+from env import env
 
 
 Address = namedtuple('Address', ['host', 'port'])
@@ -13,10 +13,10 @@ Address = namedtuple('Address', ['host', 'port'])
 @before.all
 def create_ssh_tunnel(features, marker):
     world.ssh_tunnel = SSHTunnelForwarder(
-        (env.SSH_GATEWAY_HOST, env.SSH_GATEWAY_PORT),
+        env.SSH_GATEWAY_ADDRESS,
         ssh_username=env.SSH_GATEWAY_USER,
         ssh_pkey=env.SSH_GATEWAY_PKEY,
-        remote_bind_address=(env.REMOTE_BIND_HOST, env.REMOTE_BIND_PORT),
+        remote_bind_address=env.REMOTE_BIND_ADDRESS,
     )
     world.ssh_tunnel.__enter__()
     world.redis_credentials = get_redis_credentials()

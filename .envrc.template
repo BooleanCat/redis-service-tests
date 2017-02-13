@@ -1,10 +1,7 @@
-# password for the remote redis instance
-export REDIS_AUTH=
-
 # port for the remote redis instance
 export REMOTE_BIND_PORT=
 
-# ip address of the remote redis instance
+# host address of the remote redis instance
 export REMOTE_BIND_HOST=
 
 # ssh gateway username
@@ -13,8 +10,11 @@ export SSH_GATEWAY_USER=
 # ssh gateway private key
 export SSH_GATEWAY_PKEY=
 
-# ip address of the ssh gateway
+# host address of the ssh gateway
 export SSH_GATEWAY_HOST=
 
 # port of the ssh gateway
 export SSH_GATEWAY_PORT=
+
+# test target's deployment manifest
+export DEPLOYMENT_MANIFEST=

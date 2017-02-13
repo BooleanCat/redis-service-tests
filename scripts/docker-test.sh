@@ -11,7 +11,9 @@ pushd $ROOT > /dev/null
   docker run \
     $( docker_envs ) \
     -e SSH_GATEWAY_PKEY=/home/test/pkey.pem \
+    -e DEPLOYMENT_MANIFEST=/home/test/manifest.yml \
     -v $SSH_GATEWAY_PKEY:/home/test/pkey.pem \
+    -v $DEPLOYMENT_MANIFEST:/home/test/manifest.yml \
     -v $ROOT:/home/test/redis-service-tests \
     -i -t redis-service-tests redis-service-tests/scripts/test.sh
 popd > /dev/null
