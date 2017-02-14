@@ -2,6 +2,8 @@ import os
 import yaml
 from functools import lru_cache
 
+from manifest import Manifest
+
 
 class Env:
     SSH_GATEWAY_HOST = os.environ['SSH_GATEWAY_HOST']
@@ -14,7 +16,8 @@ class Env:
 
     @property
     def REDIS_AUTH(self):
-        return self._get_redis_job_properties()['redis']['requirepass']
+        properties = self._manifest.get_properties_for('redis', 'redis')
+        return properties['redis']['requirepass']
 
     @property
     def SSH_GATEWAY_ADDRESS(self):
@@ -24,22 +27,10 @@ class Env:
     def REMOTE_BIND_ADDRESS(self):
         return (self.REMOTE_BIND_HOST, self.REMOTE_BIND_PORT)
 
+    @property
     @lru_cache(None)
-    def _get_manifest(self):
-        with open(self.DEPLOYMENT_MANIFEST) as raw_manifest:
-            return yaml.load(raw_manifest)
-
-    def _get_deployment_name(self):
-        return self._get_manifest()['name']
-
-    def _get_redis_job_properties(self):
-        is_redis = lambda job: job['name'] == 'redis'
-        jobs = self._get_redis_instance_group()['jobs']
-        return next(filter(is_redis, jobs))['properties']
-
-    def _get_redis_instance_group(self):
-        is_redis = lambda group: group['name'] == 'redis'
-        return next(filter(is_redis, self._get_manifest()['instance_groups']))
+    def _manifest(self):
+        return Manifest(self.DEPLOYMENT_MANIFEST)
 
 
 env = Env()
