@@ -1,6 +1,3 @@
-# host address of the remote redis instance
-export REMOTE_BIND_HOST=
-
 # ssh gateway username
 export SSH_GATEWAY_USER=
 
@@ -15,3 +12,18 @@ export SSH_GATEWAY_PORT=
 
 # test target's deployment manifest
 export DEPLOYMENT_MANIFEST=
+
+# path to bosh binary, defaults to 'bosh'
+export BOSH_PATH=
+
+# path to the ca cert for the target bosh director
+export BOSH_CA_CERT=
+
+# username for the bosh director
+export BOSH_CLIENT=
+
+# password for the bosh director
+export BOSH_CLIENT_SECRET=
+
+# url of the bosh director
+export BOSH_ENVIRONMENT=

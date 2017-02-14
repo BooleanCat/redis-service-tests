@@ -1,5 +1,6 @@
-import yaml
 from functools import lru_cache
+
+import yaml
 
 
 class Manifest:
