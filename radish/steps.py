@@ -13,7 +13,15 @@ def ping_redis(step):
     step.context.response = step.context.connection.ping()
 
 
-@then('I expect the response {response:w}')
+@when('I get the config {config:w}')
+def config_get(step, config):
+    config_command = world.config_alias or 'CONFIG'
+
+    raw_respone = step.context.connection.execute_command(f"{config_command} GET {config}")
+    step.context.response = raw_respone[1].decode('utf-8')
+
+
+@then('I expect the response {response:S}')
 def response_of_pong(step, response):
     if response == "PONG":
         expect(step.context.response).to(be_true)

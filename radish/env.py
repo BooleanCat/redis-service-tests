@@ -38,6 +38,14 @@ class Env:
         return (self.REMOTE_BIND_HOST, self.REMOTE_BIND_PORT)
 
     @property
+    def REDIS_CONFIG_ALIAS(self):
+        properties = self._manifest.get_properties_for('redis', 'redis')
+        try:
+            return properties['redis']['rename-command']['CONFIG']
+        except KeyError:
+            return None
+
+    @property
     @lru_cache(None)
     def _manifest(self):
         return Manifest(self.DEPLOYMENT_MANIFEST)

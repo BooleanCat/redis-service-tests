@@ -19,6 +19,7 @@ def create_ssh_tunnel(features, marker):
     )
     world.ssh_tunnel.__enter__()
     world.redis_credentials = get_redis_credentials()
+    world.config_alias = env.REDIS_CONFIG_ALIAS
 
 
 @after.all
