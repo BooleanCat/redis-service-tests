@@ -1,6 +1,3 @@
-# port for the remote redis instance
-export REMOTE_BIND_PORT=
-
 # host address of the remote redis instance
 export REMOTE_BIND_HOST=
 

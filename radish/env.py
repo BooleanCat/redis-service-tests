@@ -9,7 +9,7 @@ class Env:
     SSH_GATEWAY_USER = os.environ['SSH_GATEWAY_USER']
     SSH_GATEWAY_PKEY = os.environ['SSH_GATEWAY_PKEY']
     REMOTE_BIND_HOST = os.environ['REMOTE_BIND_HOST']
-    REMOTE_BIND_PORT = int(os.environ['REMOTE_BIND_PORT'])
+    REMOTE_BIND_PORT = 6379
     DEPLOYMENT_MANIFEST = os.environ['DEPLOYMENT_MANIFEST']
 
     @property
